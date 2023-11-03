@@ -134,3 +134,5 @@ ADD CONSTRAINT PK_Order PRIMARY KEY (id),
 ADD CONSTRAINT UQ_Order_Rent UNIQUE (rent_id); 
 
 -- Foreigns Keys
+
+ALTER TABLE Sure ADD CONSTRAINT FK_Sure_Vehicle FOREIGN KEY (vehicle_id) REFERENCES Vehicle(id)
