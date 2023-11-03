@@ -51,15 +51,17 @@ CREATE TABLE Vehicle (
      description TEXT NOT NULL
 );
 
-
+ALTER TABLE Vehicle ADD CONSTRAINT PK_Vehicle PRIMARY KEY (id);
 
 CREATE TABLE Rent(
      id INT UNSIGNED NOT NULL,
-     client_id INT UNSIGNED NULL,
-     vehicle_id INT UNSIGNED NULL,
-     delivery_date DATE NULL,
-     return_date DATE NULL
+     client_id INT UNSIGNED NOT NULL,
+     vehicle_id INT UNSIGNED NOT NULL,
+     delivery_date DATE NOT NULL,
+     return_date DATE NOT NULL
 );
+
+ALTER TABLE ADD CONSTRAINT PK_Rent PRIMARY KEY (id); 
 
 CREATE TABLE Invoice(
      id INT UNSIGNED NOT NULL,
@@ -69,43 +71,66 @@ CREATE TABLE Invoice(
      details TEXT NOT NULL
 );
 
+ALTER TABLE ADD CONSTRAINT PK_Invoice PRIMARY KEY (id);
+
 CREATE TABLE Voucher(
      id INT UNSIGNED NOT NULL,
-     client_id INT UNSIGNED NULL,
-     invoice_id INT UNSIGNED NULL,
-     invoice_fine_id INT UNSIGNED NOT NULL,
+     client_id INT UNSIGNED NOT NULL,
+     invoice_id INT UNSIGNED NOT NULL,
+     invoice_fine_id INT UNSIGNED NULL,
      details TEXT NOT NULL,
      voucher_date DATE NOT NULL
 );
 
-CREATE TABLE Flag(
-     id INT UNSIGNED NOT NULL,
-     TEXT NOT NULL flag
+CREATE TABLE Voucher
+ADD CONSTRAINT Pk_Voucher PRIMARY KEY (id),
+ADD CONSTRAINT UQ_invoice UNIQUE (invoice_id);
+
+CREATE TABLE Brand(
+    id INT UNSIGNED NOT NULL,
+    brand TEXT NOT NULL
 );
+
+ALTER TABLE Brand
+ADD CONSTRAINT PK_Brand PRIMARY KEY (id),
+ADD CONSTRAINT UQ_Brand UNIQUE (brand);
 
 CREATE TABLE Payment_Type(
      id INT UNSIGNED NOT NULL,
      payment_type TEXT NOT NULL
 );
 
+ALTER TABLE Payment_Type
+ADD CONSTRAINT PK_Payment_Type PRIMARY KEY (id),
+ADD CONSTRAINT UQ_payment_type UNIQUE (payment_type);
+
 CREATE TABLE Car_type(
      id INT UNSIGNED NOT NULL,
      brand_id INT UNSIGNED NOT NULL,
      mode_id INT UNSIGNED NOT NULL,
-     cart_type VARCHAR(30) NULL
+     cart_type VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE phone (
-     client_id BIGINT UNSIGNED NOT NULL,
-     phone TEXT NULL,
-     phone_type TEXT NULL
+ALTER TABLE Car_type ADD CONSTRAINT PK_Car_type PRIMARY KEY (id);
+
+CREATE TABLE Phone (
+     client_id INT UNSIGNED NOT NULL,
+     phone VARCHAR(20) NOT NULL,
+     phone_type VARCHAR(20) NOT NULL
 );
+
+ALTER TABLE Phone ADD CONSTRAINT PK_Phone PRIMARY KEY (phone);
 
 CREATE TABLE Order(
      id INT UNSIGNED NOT NULL,
      rent_id INT UNSIGNED NOT NULL,
      days_payment_value DECIMAL(8, 2) NOT NULL,
-     customer_name TEXT NULL,
      order_date DATE NOT NULL,
      loan_days INT UNSIGNED NOT NULL
 );
+
+ALTER TABLE Order 
+ADD CONSTRAINT PK_Order PRIMARY KEY (id),
+ADD CONSTRAINT UQ_Order_Rent UNIQUE (rent_id); 
+
+-- Foreigns Keys
