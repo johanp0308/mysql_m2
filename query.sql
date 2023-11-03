@@ -227,7 +227,7 @@ USE institution;
 
 
 -- Consultas
-SELECT * FROM Session_Academica;
+
 -- Estudiante que esten Pasi Salvo con su id y fecha de inico
 SELECT tipo_session as Jornada,fecha_session as Inicio de la Session, fk_estudiante_id as Estudiante,
 IF(estado='Pendiente','No cumple','Bien')
@@ -236,3 +236,15 @@ FROM Session_Academica as Sec
 
 -- Estudiantes que terminaron las session por jornadas.
 SELECT tipo_session as Jornada, COUNT(tipo_session) as Estudiantes FROM Session_Academica GROUP BY tipo_session;
+
+-- Facultad buscadas por sus ubicaciones
+SELECT ubicacion as Edficio, facultad_title as Facultad FROM Facultad;
+
+-- Facultad especifica de su ubicacion
+SELECT facultad_title as Facultad FROM Facultad WHERE ubicacion='Edificio A';
+
+-- Cantidad estudiantes aprobados y reprobados
+SELECT COUNT(estado) as Estudiantes_Aprobados FROM Examen WHERE estado='Aprobado' GROUP BY estado;
+SELECT COUNT(estado) as Estudiantes_Aprobados FROM Examen WHERE estado='Reprobado' GROUP BY estado;
+
+SELECT COUNT(fk_curso_id) as Curso_Id FROM Examen WHERE  GROUP BY fk_curso_id; 
