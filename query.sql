@@ -107,7 +107,7 @@ ADD CONSTRAINT UQ_payment_type UNIQUE (payment_type);
 CREATE TABLE Car_type(
      id INT UNSIGNED NOT NULL,
      brand_id INT UNSIGNED NOT NULL,
-     mode_id INT UNSIGNED NOT NULL,
+     model_id INT UNSIGNED NOT NULL,
      cart_type VARCHAR(50) NOT NULL
 );
 
@@ -134,5 +134,27 @@ ADD CONSTRAINT PK_Order PRIMARY KEY (id),
 ADD CONSTRAINT UQ_Order_Rent UNIQUE (rent_id); 
 
 -- Foreigns Keys
+ALTER TABLE Order 
+ADD CONSTRAINT FK_Order_Rent FOREIGN KEY (rent_id) REFERENCES Rent(id);
 
-ALTER TABLE Sure ADD CONSTRAINT FK_Sure_Vehicle FOREIGN KEY (vehicle_id) REFERENCES Vehicle(id)
+ALTER TABLE Phone ADD CONSTRAINT FK_Phone_Cliente FOREIGN KEY (client_id) REFERENCES Client(id);
+
+ALTER TABLE Cart_type 
+ADD CONSTRAINT FK_Car_type_model FOREIGN KEY (model_id) REFERENCES Model(id),
+ADD CONSTRAINT FK_Car_type_Brand FOREIGN KEY (brand_id) REFERENCES Brand(id);
+
+ALTER TABLE Voucher
+ADD CONSTRAINT FK_Voucher_Invoice FOREIGN KEY (invoice_id) REFERENCES Invoice(id),
+ADD CONSTRAINT FK_Voucher_Invoice_fine FOREIGN KEY (invoice_fine_id) REFERENCES Invoice(id);
+
+ALTER TABLE Invoice ADD CONSTRAINT FK_Invoice_Payment_Type FOREIGN KEY (id_type) REFERENCES Payment_Type(id) 
+
+ALTER TABLE Rent
+ADD CONSTRAINT FK_Rent_Client FOREIGN KEY (client_id) REFERENCES Client(id),
+ADD CONSTRAINT FK_Rent_Vehicle FOREIGN KEY (vehicle_id) REFERENCES Vehicle(id);
+
+ALTER TABLE Vehicle ADD CONSTRAINT FK_Vehicle_car_type FOREIGN KEY (car_type_id) REFERENCES Car_type(id);
+
+ALTER TABLE Check_vehicule ADD CONSTRAINT FK_Check_Rent FOREIGN KEY (rent_id) REFERENCES Rent(id);
+
+ALTER TABLE Sure ADD CONSTRAINT FK_Sure_Vehicle FOREIGN KEY (vehicle_id) REFERENCES Vehicle(id);
