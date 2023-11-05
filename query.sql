@@ -286,7 +286,7 @@ SELECT COUNT(fk_curso_id) as Curso_Id FROM Examen WHERE  GROUP BY fk_curso_id;
 
 /* Curso */
 
-/* Muestra el nombre del curso su departamenot y nombre del profe */
+/* Muestra el nombre del curso su departamenot y nombre del profesor */
 SELECT
     c.titulo as Curso, 
     d.nombre_departamento as Departamento, 
