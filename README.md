@@ -23,4 +23,5 @@ director Entidad: LOCKER Atributos: size, location, number
 R/
 STUDENT => student ID MOVIE => title LOCKER => number
 
-![](./img/modelo_tal.PNG)
+![](./img/modelo_tal.PNG
+)
