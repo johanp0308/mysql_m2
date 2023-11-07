@@ -12,19 +12,19 @@ CREATE TABLE Check_vehicule(
      id INT UNSIGNED NOT NULL,
      rent_id INT UNSIGNED NOT NULL,
      state VARCHAR(30) NOT NULL,
-     details TEXT NOT NULL,
+     details VARCHAR(255) NOT NULL,
      date_check DATE NULL,
      check_type VARCHAR(30) NOT NULL
 );
 
-ALTER TABLE 
-ADD CONSTRAINT Check_vehicule PK_Check PRIMARY KEY (id),
+ALTER TABLE Check_vehicule
+ADD CONSTRAINT PK_Check PRIMARY KEY (id),
 ADD CONSTRAINT UQ_rent_id UNIQUE (rent_id);
 
 
 CREATE TABLE Model(
     id INT UNSIGNED NOT NULL,
-    model TEXT NULL
+    model VARCHAR(255) NULL
 );
 
 ALTER TABLE Model
@@ -48,7 +48,7 @@ CREATE TABLE Vehicle (
      car_type_id INT UNSIGNED NOT NULL,
      day_price DECIMAL(8, 2) NOT NULL,
      minimum_days INT UNSIGNED NOT NULL,
-     description TEXT NOT NULL
+     description VARCHAR(255) NOT NULL
 );
 
 ALTER TABLE Vehicle ADD CONSTRAINT PK_Vehicle PRIMARY KEY (id);
@@ -61,34 +61,34 @@ CREATE TABLE Rent(
      return_date DATE NOT NULL
 );
 
-ALTER TABLE ADD CONSTRAINT PK_Rent PRIMARY KEY (id); 
+ALTER TABLE Rent ADD CONSTRAINT PK_Rent PRIMARY KEY (id); 
 
 CREATE TABLE Invoice(
      id INT UNSIGNED NOT NULL,
      order_id INT UNSIGNED NULL,
      id_type INT UNSIGNED NULL,
      total_value DECIMAL(8, 2) NULL,
-     details TEXT NOT NULL
+     details VARCHAR(255) NOT NULL
 );
 
-ALTER TABLE ADD CONSTRAINT PK_Invoice PRIMARY KEY (id);
+ALTER TABLE Invoice ADD CONSTRAINT PK_Invoice PRIMARY KEY (id);
 
 CREATE TABLE Voucher(
      id INT UNSIGNED NOT NULL,
      client_id INT UNSIGNED NOT NULL,
      invoice_id INT UNSIGNED NOT NULL,
      invoice_fine_id INT UNSIGNED NULL,
-     details TEXT NOT NULL,
+     details VARCHAR(255) NOT NULL,
      voucher_date DATE NOT NULL
 );
 
-CREATE TABLE Voucher
+ALTER TABLE Voucher
 ADD CONSTRAINT Pk_Voucher PRIMARY KEY (id),
 ADD CONSTRAINT UQ_invoice UNIQUE (invoice_id);
 
 CREATE TABLE Brand(
     id INT UNSIGNED NOT NULL,
-    brand TEXT NOT NULL
+    brand VARCHAR(255) NOT NULL
 );
 
 ALTER TABLE Brand
@@ -97,7 +97,7 @@ ADD CONSTRAINT UQ_Brand UNIQUE (brand);
 
 CREATE TABLE Payment_Type(
      id INT UNSIGNED NOT NULL,
-     payment_type TEXT NOT NULL
+     payment_type VARCHAR(255) NOT NULL
 );
 
 ALTER TABLE Payment_Type
@@ -108,7 +108,7 @@ CREATE TABLE Car_type(
      id INT UNSIGNED NOT NULL,
      brand_id INT UNSIGNED NOT NULL,
      model_id INT UNSIGNED NOT NULL,
-     cart_type VARCHAR(50) NOT NULL
+     car_type VARCHAR(50) NOT NULL
 );
 
 ALTER TABLE Car_type ADD CONSTRAINT PK_Car_type PRIMARY KEY (id);
@@ -121,25 +121,24 @@ CREATE TABLE Phone (
 
 ALTER TABLE Phone ADD CONSTRAINT PK_Phone PRIMARY KEY (phone);
 
-CREATE TABLE Order(
+CREATE TABLE Order_cliente(
      id INT UNSIGNED NOT NULL,
      rent_id INT UNSIGNED NOT NULL,
-     days_payment_value DECIMAL(8, 2) NOT NULL,
+     days_payment_value DECIMAL(8,2) NOT NULL,
      order_date DATE NOT NULL,
      loan_days INT UNSIGNED NOT NULL
 );
 
-ALTER TABLE Order 
+ALTER TABLE Order_cliente 
 ADD CONSTRAINT PK_Order PRIMARY KEY (id),
 ADD CONSTRAINT UQ_Order_Rent UNIQUE (rent_id); 
 
--- Foreigns Keys
-ALTER TABLE Order 
+ALTER TABLE Order_cliente 
 ADD CONSTRAINT FK_Order_Rent FOREIGN KEY (rent_id) REFERENCES Rent(id);
 
 ALTER TABLE Phone ADD CONSTRAINT FK_Phone_Cliente FOREIGN KEY (client_id) REFERENCES Client(id);
 
-ALTER TABLE Cart_type 
+ALTER TABLE Car_type 
 ADD CONSTRAINT FK_Car_type_model FOREIGN KEY (model_id) REFERENCES Model(id),
 ADD CONSTRAINT FK_Car_type_Brand FOREIGN KEY (brand_id) REFERENCES Brand(id);
 
@@ -147,7 +146,7 @@ ALTER TABLE Voucher
 ADD CONSTRAINT FK_Voucher_Invoice FOREIGN KEY (invoice_id) REFERENCES Invoice(id),
 ADD CONSTRAINT FK_Voucher_Invoice_fine FOREIGN KEY (invoice_fine_id) REFERENCES Invoice(id);
 
-ALTER TABLE Invoice ADD CONSTRAINT FK_Invoice_Payment_Type FOREIGN KEY (id_type) REFERENCES Payment_Type(id) 
+ALTER TABLE Invoice ADD CONSTRAINT FK_Invoice_Payment_Type FOREIGN KEY (id_type) REFERENCES Payment_Type(id);
 
 ALTER TABLE Rent
 ADD CONSTRAINT FK_Rent_Client FOREIGN KEY (client_id) REFERENCES Client(id),
